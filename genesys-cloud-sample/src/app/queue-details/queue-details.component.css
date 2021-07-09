@@ -1,0 +1,44 @@
+div.queue-details {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 12px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.queue-observations {
+  display: flex;
+  align-items: baseline;
+}
+
+.queue-name {
+  flex-grow: 4;
+}
+
+.onqueue {
+  margin-right: 30px;
+}
+
+.total {
+  margin-right: 30px;
+}
+
+button.logout-agents {
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+
+button.logout-agents:disabled {
+  cursor:default;
+}
+
+
+button.logout-agents:hover:not([disabled]){
+  background-color: #ff8888;
+  border-color: white;
+  color: white;
+}

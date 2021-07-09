@@ -1,0 +1,27 @@
+select {
+  padding: 7px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: #555;
+}
+
+button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: #555;
+}
+
+button:hover{
+  background-color: #ff8888;
+  border-color: white;
+  color: white;
+}
+
+.userOffline {
+  min-height: 33px;
+  min-width: 159px;
+  text-align: right;
+  font-style: italic;
+  color: #aaa;
+}

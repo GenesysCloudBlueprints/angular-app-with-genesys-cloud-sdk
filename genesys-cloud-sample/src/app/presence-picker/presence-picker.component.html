@@ -1,0 +1,26 @@
+<div class="container">
+  <div 
+    *ngIf="user.presence?.presenceDefinition?.systemPresence !== 'Offline';
+    else userOffline"
+  >
+    <select 
+      name="presence" 
+      id="presence" #presence 
+      (change)="onPresenceChange(presence.value)"
+    >
+      <option 
+        *ngFor="let presence of presenceDefinitions" 
+        [value]="presence.id"
+        [selected]="user.presence?.presenceDefinition?.id === presence.id"
+      >
+        {{presence.languageLabels[languageLabel]}}
+      </option>
+    </select>
+    <button (click)="logoutUser()">Logout</button>
+  </div>
+  <ng-template #userOffline>
+    <div class="userOffline">
+      Offline
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,37 @@
+div.entry-container {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 12px 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.user-name {
+  flex-grow: 4;
+}
+
+button.btn-agent-details{
+  margin-right: 20px;
+  border-color: #ccc;
+  color: #555;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  height: 33px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.avatar-container {
+  max-width: 64px;
+  max-height: 64px;
+  margin-right: 20px;
+}
+
+.avatar-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}

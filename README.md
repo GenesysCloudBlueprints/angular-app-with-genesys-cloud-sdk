@@ -1,2 +1,2 @@
-# angular-app-with-genesys-cloud-sdk
-This Genesys Cloud blueprint provides instructions in configuring an Angular Project with the Genesys Cloud Platform SDK
+# platform-sdk-in-angular-blueprint
+A blueprint which shows how to use the Genesys Cloud Platform SDK in an Angular app.

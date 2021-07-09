@@ -1,0 +1,17 @@
+<div 
+  class="entry-container"
+  *ngIf="user"
+>
+  <div class="avatar-container">
+    <img [src]="userAvatar" alt="">
+  </div>
+  <div class="user-name">
+    <div>{{user.name}}</div>
+    <div class="small">email: {{user.email}}</div>
+    <div class="small">id: {{user.id}}</div>
+  </div>
+  <button class="btn-agent-details" (click)="goToAgentDetails(user.id!)">
+    Go To Agent Details
+  </button> 
+  <app-presence-picker [user]="user"></app-presence-picker>
+</div>

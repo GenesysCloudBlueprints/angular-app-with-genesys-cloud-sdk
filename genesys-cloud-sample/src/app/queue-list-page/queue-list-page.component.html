@@ -1,0 +1,25 @@
+<div>
+  <form action="#" autocomplete="off">
+    <input 
+      type="text" #searchBox 
+      id="search-box"
+      [value]="this.searchTerm.value"
+      (input)="searchQueue(searchBox.value)"
+      placeholder="Queue Name" />
+  </form>
+
+  <div *ngIf="fetching">
+    <div class="spinner">
+      <img src="assets/loading.svg" alt="Loading..." srcset="">
+    </div>
+  </div>
+
+  <div class="queues-container">
+    <div 
+      class="queue-list-entry"
+      *ngFor="let queue of queues$ | async"
+    >
+      <app-queue-details [queue]="queue"></app-queue-details>
+    </div>
+  </div>
+</div>

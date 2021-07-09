@@ -1,0 +1,22 @@
+<div>
+  <form action="#" autocomplete="off">
+    <input 
+      type="text" #searchBox 
+      id="search-box"
+      [value]="this.searchTerm.value"
+      (input)="searchUser(searchBox.value)"
+      placeholder="Name or Email..." />
+  </form>
+
+  <div *ngIf="fetching">
+    <div class="spinner">
+      <img src="assets/loading.svg" alt="Loading..." srcset="">
+    </div>
+  </div>
+
+  <div class="search-result">
+    <div *ngFor="let user of users$ | async">
+      <app-user-list-entry [user]=user></app-user-list-entry>
+    </div>
+  </div>
+</div>

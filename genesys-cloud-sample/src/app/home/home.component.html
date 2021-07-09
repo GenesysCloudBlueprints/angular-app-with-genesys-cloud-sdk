@@ -1,0 +1,36 @@
+<div *ngIf="userDetails; else userDetailsUnavailable">
+  <div class="top-section">
+    <img class="user-avatar" [src]="userAvatar">
+    <h2 class="greeting">Hi, {{userDetails.name}}!</h2>
+    <app-presence-picker [user]="userDetails"></app-presence-picker>
+  </div>
+  
+
+  <div>
+    <h4>About the App:</h4>
+    <p>This is a simple blueprint showing how you can develop apps using Angular and the Genesys Cloud SDK.</p>
+    <p>
+      The app uses Implicit <a href="https://developer.genesys.cloud/api/rest/authorization/use-implicit-grant">Grant Authorization</a> and the <a href="https://developer.genesys.cloud/api/rest/client-libraries/javascript/">Genesys Cloud SDK</a> to implement the following features:
+    </p>
+    <ul>
+      <li>User Searching</li>
+      <li>Presence Status Updating</li>
+      <li>Bulk Logout of Agents in a Queue</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <h4>Let's look at some details about yourself...</h4>
+  <div>Id: {{userDetails.id}}</div>
+  <div>Name: {{userDetails.name}}</div>
+  <div>Email: {{userDetails.email}}</div>
+  <div>Title: {{userDetails.title || 'N/A'}}</div>
+</div>
+
+
+<ng-template #userDetailsUnavailable>
+  <div class="spinner">
+    <img src="assets/loading.svg" alt="Loading..." srcset="">
+  </div>
+</ng-template>
