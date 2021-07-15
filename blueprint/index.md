@@ -110,6 +110,12 @@ export const environment = {
 };
 ```
 
+If you don't have Angular installed, then run this command to install the CLI:
+
+```bash
+npm install -g @angular/cli
+```
+
 Serve the Angular app locally with the following command:
 
 ```bash
