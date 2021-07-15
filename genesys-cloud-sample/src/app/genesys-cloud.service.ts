@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, BehaviorSubject, forkJoin, EMPTY } from 'rxjs';
-import { catchError, defaultIfEmpty, mergeMap, map, tap } from 'rxjs/operators';
+import { mergeMap, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import * as platformClient from 'purecloud-platform-client-v2';
+
+// Keys for localStorage
+const LANGUAGE_KEY = 'gc_language';
+const ENV_KEY = 'gc_environment'
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +33,11 @@ export class GenesysCloudService {
   lastUserSearchValue = '';
   lastQueueSearchValue = '';
 
-  constructor(private http: HttpClient) {}
+  constructor() {
+    // Try to get saved language and environment information from localstorage
+    this.language = localStorage.getItem(LANGUAGE_KEY) || this.language;
+    this.environment = localStorage.getItem(ENV_KEY) || this.environment;
+  }
 
   private loginImplicitGrant(): Observable<platformClient.AuthData> {
     return from(this.client.loginImplicitGrant(environment.GENESYS_CLOUD_CLIENT_ID, environment.REDIRECT_URI))
@@ -45,9 +52,9 @@ export class GenesysCloudService {
             );
   }
 
-  initialize(language: string|null, environment: string|null): Observable<any> {
+  initialize(): Observable<any> {
     this.client.setPersistSettings(true);
-    if(environment) this.client.setEnvironment(environment);
+    this.client.setEnvironment(this.environment);
 
     return this.loginImplicitGrant().pipe(
               mergeMap(data => from(this.presenceApi.getPresencedefinitions())),
@@ -66,6 +73,19 @@ export class GenesysCloudService {
             );
   }
 
+  setLanguage(language: string | null): void {
+    if(language) {
+      this.language = language;
+      localStorage.setItem(LANGUAGE_KEY, this.language);
+    }
+  }
+
+  setEnvironment(environment: string | null): void {
+    if(environment) {
+      this.environment = environment;
+      localStorage.setItem(ENV_KEY, this.environment);
+    }
+  }
 
   getUserDetails(id: string): Observable<platformClient.Models.User> {
     return from(this.usersApi.getUser(id, { 

@@ -6,7 +6,7 @@ import { QueueListPageComponent } from './queue-list-page/queue-list-page.compon
 import { UserDetailsComponent } from './user-details/user-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'agentmanager', component: AgentManagerComponent },
   { path: 'user/:id', component: UserDetailsComponent },

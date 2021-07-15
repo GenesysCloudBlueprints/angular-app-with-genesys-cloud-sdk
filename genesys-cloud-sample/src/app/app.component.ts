@@ -17,16 +17,23 @@ export class AppComponent implements OnInit {
   ){ }
 
   ngOnInit(){
-    const language = this.route.snapshot.queryParamMap.get('language');
-    const environment = this.route.snapshot.queryParamMap.get('environment');
-
+    console.log(this.route.snapshot)
     this.genesysCloudService.isAuthorized.subscribe(isAuthorized => {
       this.isAuthorized = isAuthorized;
     });
 
-    this.genesysCloudService.initialize(language, environment)
-      .subscribe(() => { 
-        console.log('Succesfully logged in.')
-      });
+    // Get query parameters for 'environment' and 'language'
+    this.route.queryParams.subscribe(params => {
+      const language = params['language'];
+      const environment = params['environment'];
+
+      this.genesysCloudService.setLanguage(language);
+      this.genesysCloudService.setEnvironment(environment);
+
+      this.genesysCloudService.initialize()
+        .subscribe(() => { 
+          console.log('Succesfully logged in.')
+        });
+    });    
   }
 }
