@@ -9,7 +9,7 @@ import * as platformClient from 'purecloud-platform-client-v2';
 })
 export class HomeComponent implements OnInit {
   userDetails?: platformClient.Models.UserMe;
-  userAvatar?: string; // TODO: Default userAvatar 
+  userAvatar: string = 'assets/default-face.png';
 
   constructor(private genesysCloudService: GenesysCloudService) {
   }
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
       .subscribe(userDetails => {
         this.userDetails = userDetails
         this.userAvatar = userDetails.images?.[userDetails.images.length - 1]
-                          .imageUri;
+                          .imageUri || this.userAvatar;
       });
   }
 }
