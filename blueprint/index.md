@@ -52,12 +52,12 @@ A recommended Genesys Cloud role for the solutions engineer is Master Admin. For
 
 ### Run the app hosted in Github Pages
 
-If you want to try the sample app first then you can go to the blueprint's [Github Pages](TODO:). You would need to already have a Genesys Cloud account for authorization.
+If you want to try the sample app first then you can go to the blueprint's [Github Pages](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/). You would need to already have a Genesys Cloud account for authorization.
 
 If you're on a different region than `us-east-1` (mypurecloud.com) then you'd need to add an `environment` query parameter to the URL and enter your Genesys Cloud [environment](https://developer.genesys.cloud/api/rest/). e.g.
 
 ```bash
-https:// TODO: ?environment=mypurecloud.com.au
+https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
 ```
 
 ### Create an Implicit Grant Client
@@ -76,10 +76,10 @@ For additional configuration you need to:
 
 ### Running Locally
 
-Clone the [repo](TODO:) to your local machine:
+Clone the [repo](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk) to your local machine:
 
 ```bash
-git clone TODO:
+git clone https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk.git
 ```
 
 Go to the Angular project directory `genesys-cloud-sample`
@@ -295,5 +295,5 @@ export class AppComponent implements OnInit {
 
 * [Genesys Cloud Platform SDK - Javascript](https://developer.genesys.cloud/api/rest/client-libraries/javascript/)
 * [Angular Builders - Custom Webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack)
-* [Github Repository](TODO:)
-* [Yuri's Angular App](TODO:)
+* [Github Repository](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk)
+* [Yuri's Angular App](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk)
