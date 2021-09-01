@@ -1,38 +1,40 @@
 ---
-title: Develop an Angular App which uses the Genesys Cloud Platform SDK
+title: Develop an Angular app that uses the Genesys Cloud Platform SDK
 author: prince.merluza
 indextype: blueprint
 icon: blueprint
 image: images/cover.png
 category: 6
 summary: |
-  This Genesys Cloud Developer Blueprint demonstrates how to setup your Angular project to include the Genesys Cloud Javascript Platform SDK. The sample app is a basic Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint will also show the steps needed for configuring the SDK on a new or existing Angular project.
+  This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesys Cloud Javascript Platform SDK in an Angular project. The blueprint includes a sample Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint also shows how to configure the SDK for a new or existing Angular project.
 ---
 
-This Genesys Cloud Developer Blueprint demonstrates how to setup your Angular project to include the Genesys Cloud Javascript Platform SDK. The sample app is a basic Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint will also show the steps needed for configuring the SDK on a new or existing Angular project.
+This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesys Cloud Javascript Platform SDK in an Angular project. The blueprint includes a sample Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint also shows how to configure the SDK for a new or existing Angular project.
 
 :::primary
-**Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, click [here](#configuring-the-angular-project-to-use-genesys-cloud-sdk) to jump to the section.
+**Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, click [here](#configuring-the-angular-project-to-use-genesys-cloud-sdk "Goes to the Configure the Angular project to use the Genesys Cloud SDK").
 :::
 
-<!-- no toc -->
-* [Solution Components](#solution-components "Goes to the Solutions Components section")
-* [Requirements](#requirements "Goes to the Requirements section")
-* [Implementation Steps](#implementation-steps "Goes to the Implementation steps section")
-* [Sample App Overview](#sample-app-overview "Overview of the sample app's features")
-* [Configuring the Angular Project to use Genesys Cloud SDK](#configuring-the-angular-project-to-use-genesys-cloud-sdk "Custom Webpack configuration for Angular")
+## Contents
+
+* [Solution components](#solution-components "Goes to the Solutions Components section")
+* [Prerequisites](#prerequisites "Goes to the Prerequisites section")
+* [Implementation steps](#implementation-steps "Goes to the Implementation steps section")
+* [Sample App](#sample-app "Goes to the Sample app section")
+* [Configure the Angular Project to use Genesys Cloud SDK](#configure-the-angular-project-to-use-genesys-cloud-sdk "Goes to the Configure the Angular Project to use Genesys Cloud SDK section")
 * [Additional resources](#additional-resources "Goes to the Additional resources section")
 
 ## Solution components
 
-* **Genesys Cloud** - The Genesys cloud-based contact center platform. The Angular App will be authorizing with a Genesys Cloud user.
-* **Angular 12 CLI** - The sample app was created using Angular 12 and the Angular CLI.
+* **Genesys Cloud** - A suite of Genesys cloud services for enterprise-grade communications, collaboration, and contact center management. The Angular App will be authorized with a Genesys Cloud user.
+***QUESTION***: Better/more detailed second sentence?
+* **Angular CLI** - A command line tool that facilitates the use of the Angular development framework for building single-page applications. The sample app in this blueprint was built with the Angular 12 CLI.
 
 ### Software Development Kit (SDK)
 
 * **Genesys Cloud Platfrom API SDK** - The SDK is used for authorizing the user, and performing the API calls required in the execution of the app's features.
 
-## Requirements
+## Prerequisites
 
 ### Specialized knowledge
 
@@ -48,7 +50,7 @@ This solution requires a Genesys Cloud license. For more information on licensin
 
 A recommended Genesys Cloud role for the solutions engineer is Master Admin. For more information on Genesys Cloud roles and permissions, see the [Roles and permissions overview](https://help.mypurecloud.com/?p=24360 "Opens the Roles and permissions overview article").
 
-## Implementation Steps
+## Implementation steps
 
 ### Run the app hosted in Github Pages
 
@@ -60,7 +62,7 @@ If you're on a different region than `us-east-1` (mypurecloud.com) then you'd ne
 https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
 ```
 
-### Create an Implicit Grant Client
+### Create an Implicit Grant client in Genesys Cloud
 
 The Implicit Grant Client allows your users to authorize the app with Genesys Cloud SDK. For steps on how to create an Implicit Grant Client, click [here](https://help.mypurecloud.com/articles/create-an-oauth-client/).
 
@@ -74,7 +76,7 @@ For additional configuration you need to:
     * routing
     * users
 
-### Running Locally
+### Run locally
 
 Clone the [repo](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk) to your local machine:
 
@@ -122,7 +124,7 @@ Serve the Angular app locally with the following command:
 ng serve
 ```
 
-## Sample App Overview
+## Sample app  
 
 ### Genesys Cloud Service
 
@@ -132,31 +134,31 @@ Example:
 
 ```typescript
   getUserDetails(id: string): Observable<platformClient.Models.User> {
-    return from(this.usersApi.getUser(id, { 
+    return from(this.usersApi.getUser(id, {
         expand: ['routingStatus', 'presence'],
       }));
   }
 ```
 
-### User Details
+### User details
 
 The home page display information about the sample app and details about the current user. There's also a presence-picker component which allows the user to change their presence or routing status.
 
-### User Search
+### User search
 
 The User Sarch page is where you can search for users within your org. You can change their presence or go to their User Page which simple contains some basic information about the user including .
 
-### Queues List
+### Queues list
 
 The Queues List is a searh page where you can see Observation Query details of each queue. You can also log out all of the agents on a particular queue. This is helpful if some agents are not able to log out of their stations after their shift is supposed to be done.
 
-## Configuring the Angular Project to use Genesys Cloud SDK
+## Configure the Angular project to use Genesys Cloud SDK
 
 One of the most asked questions regarding Angular is how to include the Genesys Cloud SDK in the build process. In this section, we'll look at the step-by-step process of configuring an Angular project and other helpful advice in working with the Genesys Cloud environment.
 
 If you've jumped to this section, we're going to assume you already have all the prerequisites set-up including the Angular CLI installation, and a Genesys Cloud credentials for authorization.
 
-### Creating an Angular Project
+### Create an Angular project
 
 If you haven't done so already, create a new project with the CLI command:
 
@@ -166,7 +168,7 @@ ng new name-of-your-app
 
 You can use an already existing project, though if you're using an earlier version of Angular than 12, there's no guarantee that the succeeding steps would work the same.
 
-### Installing NPM Packages
+### Install NPM packages
 
 1. Install the Genesys Cloud Platform Client:
 
@@ -180,7 +182,7 @@ You can use an already existing project, though if you're using an earlier versi
     npm i @angular-builders/custom-webpack --save-dev
     ```
 
-### Configuration of Files for Platform Client Usage
+### Configure the files for platform client usage
 
 1. In the root of your project, create a file named `extra-webpack.config.js` (It can be named anything). Enter the following content in the file:
 
@@ -217,7 +219,7 @@ You can use an already existing project, though if you're using an earlier versi
               "scripts": [..., "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
             }
           }
-            
+
         ```
 
     2. The `serve` target will use the `options` configuration from `build` so we'll ony have to update the `builder` property:
@@ -251,7 +253,7 @@ You can use an already existing project, though if you're using an earlier versi
               "scripts": [..., "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
             }
           }
-            
+
         ```
 
 3. Finally, in your `tsconfig.json`, we need to disable `noImplicitAny` in the `compilerOptions`:
@@ -268,7 +270,7 @@ You can use an already existing project, though if you're using an earlier versi
 
     If we don't add this property, some files in the Platform SDK package will cause the Angular build to fail.
 
-### Import the platform-client-sdk to your Project
+### Import the platform-client-sdk to your project
 
 After following the step-by-step instructions, you should now be able to import and use the Platform Client in your code.
 
@@ -291,7 +293,7 @@ export class AppComponent implements OnInit {
 }
 ```
 
-## Additional Resources
+## Additional resources
 
 * [Genesys Cloud Platform SDK - Javascript](https://developer.genesys.cloud/api/rest/client-libraries/javascript/)
 * [Angular Builders - Custom Webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack)
