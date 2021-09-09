@@ -131,7 +131,7 @@ To run the sample Angular app from the blueprint repo:
   https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
   ```
 
-  For more information, see [Platform API](https://developer.genesys.cloud/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
+  For more information, see [Platform API](/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
 
 ## Implementation steps
 
@@ -302,7 +302,7 @@ For more information, see [Create an OAuth client](https://help.mypurecloud.com/
 
 ## Additional resources
 
-* [Genesys Cloud Platform SDK - Javascript](https://developer.genesys.cloud/api/rest/client-libraries/javascript/ "Goes to the Platform API Javascript Client page")
+* [Genesys Cloud Platform SDK - Javascript](/api/rest/client-libraries/javascript/ "Goes to the Platform API Javascript Client page")
 * [Angular Builders - Custom Webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack "Goes to the Custom webpack builders for Angular build facade page") in the npm website
 * [angular-app-with-genesys-cloud-sdk repository](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the angular-app-with-genesys-cloud-sdk repository") in Github
 * [Sample Angular app](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk "Goes to the sample Angular app")
