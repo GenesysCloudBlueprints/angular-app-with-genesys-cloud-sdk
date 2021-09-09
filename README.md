@@ -8,6 +8,8 @@ This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesy
 
 ## Sample Angular app
 
+This solution includes a sample Angular app that uses the Genesys Cloud Javascript Platform SDK to display and update data for Genesys Cloud users.
+
 [Sample Angular app](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk "Goes to the sample Angular app")
 
 To authenticate in a Genesys Cloud region other than `mypurecloud.com`, add an `environment` query parameter.
