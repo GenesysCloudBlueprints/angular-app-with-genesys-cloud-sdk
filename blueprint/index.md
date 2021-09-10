@@ -13,6 +13,10 @@ This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesy
 
 ![gcsdk_angular.png]("Develop an Angular app that uses the Genesys Cloud Platform SDK")
 
+:::primary
+**Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, click [here](#configuring-the-angular-project-to-use-genesys-cloud-sdk) to jump to the section.
+:::
+
 ## Contents
 
 * [Solution components](#solution-components "Goes to the Solutions Components section")
