@@ -11,7 +11,7 @@ summary: |
 
 This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesys Cloud Javascript Platform SDK in an Angular project. The blueprint includes a sample Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint also shows how to configure the SDK for a new or existing Angular project.
 
-![gcsdk_angular.png]("Develop an Angular app that uses the Genesys Cloud Platform SDK")
+![Flowchart](images/gcsdk_angular.png "Develop an Angular app that uses the Genesys Cloud Platform SDK")
 
 :::primary
 **Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, click [here](#configuring-the-angular-project-to-use-genesys-cloud-sdk) to jump to the section.
@@ -55,7 +55,7 @@ This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesy
 
 This solution includes a sample Angular app that uses the Genesys Cloud Javascript Platform SDK to display and update data for Genesys Cloud users.
 
-![sampleapp.png]("The main page of the sample app")
+![Sample App screenshot](images/sampleapp.png "The main page of the sample app")
 
  From the sample Angular app, you can update some user data, and that updated data is returned to Genesys Cloud in real-time. Specifically:
 
