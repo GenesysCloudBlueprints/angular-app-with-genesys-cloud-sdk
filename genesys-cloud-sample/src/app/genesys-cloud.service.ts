@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, BehaviorSubject, forkJoin, EMPTY } from 'rxjs';
 import { mergeMap, map, tap } from 'rxjs/operators';
-import { environment } from '../../src/environments/environment';
+import { environment } from 'src/environments/environment';
 import * as platformClient from 'purecloud-platform-client-v2';
 
 // Keys for localStorage
@@ -121,7 +121,7 @@ export class GenesysCloudService {
     }))
     .pipe(
       map(data => {
-        const result = data.results?.find(r => r.group?.['queueId'] === queueId); 
+        const result = data.results?.find(r => r.group?.queueId === queueId); 
         if(!result) throw new Error(`No results queried for ${queueId}`);
 
         return result;

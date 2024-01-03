@@ -35,7 +35,7 @@ This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesy
 ## Solution components
 
 * **Genesys Cloud** - A suite of Genesys cloud services for enterprise-grade communications, collaboration, and contact center management. In this solution, a Genesys Cloud user account is required in order for the Angular app to be authorized to integrate with Genesys Cloud.
-* **Angular CLI** - A command line tool that facilitates the use of the Angular development framework for building single-page applications. The sample app in this solution was built with Angular 17 CLI.
+* **Angular CLI** - A command line tool that facilitates the use of the Angular development framework for building single-page applications. The sample app in this solution was built with Angular 12 CLI.
 
 ### Software development kit (SDK)
 
