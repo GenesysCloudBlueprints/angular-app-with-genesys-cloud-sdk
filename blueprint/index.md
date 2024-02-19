@@ -84,7 +84,30 @@ All of the API methods return a promise, but if you want to work with observable
   }
 ```
 
-### Prepare your copy of the sample Angular app
+### Run the sample Angular app hosted in Github
+
+You can run the sample Angular app locally or from the blueprint repo.
+
+:::primary
+**Note**: Regardless of where you run the sample Angular app from, you need a Genesys Cloud user account in order for it to work.
+:::
+
+To run the sample Angular app from the blueprint repo:
+
+1.  Click [here](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/ "Goes to the sample Angular app").
+
+2.  If you're on a different region than `us-east-1` (mypurecloud.com), add an `environment` query parameter to the URL and enter your Genesys Cloud environment.
+
+  For example:
+
+  ```bash
+  https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
+  ```
+
+  For more information, see [Platform API](/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
+
+
+### Run the sample Angular app locally
 
 1. Clone the [blueprint repo](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the blueprint repo in Github") to your local machine:
 
@@ -122,27 +145,11 @@ All of the API methods return a promise, but if you want to work with observable
   };
   ```
 
-### Run the sample Angular app
-
-You can run the sample Angular app locally or from the blueprint repo.
-
-:::primary
-**Note**: Regardless of where you run the sample Angular app from, you need a Genesys Cloud user account in order for it to work.
-:::
-
-To run the sample Angular app from the blueprint repo:
-
-1.  Click [here](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/ "Goes to the sample Angular app").
-
-2.  If you're on a different region than `us-east-1` (mypurecloud.com), add an `environment` query parameter to the URL and enter your Genesys Cloud environment.
-
-  For example:
+4. Serve the Angular app locally:
 
   ```bash
-  https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
+  ng serve
   ```
-
-  For more information, see [Platform API](/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
 
 ## Implementation steps
 
@@ -176,13 +183,7 @@ For more information, see [Create an OAuth client](https://help.mypurecloud.com/
   npm install -g @angular/cli
   ```
 
-2. Serve the Angular app locally:
-
-  ```bash
-  ng serve
-  ```
-
-3. Create a new Angular 12 project:
+2. Create a new Angular 12 project:
 
   ```bash
   ng new name-of-your-app
@@ -224,6 +225,8 @@ For more information, see [Create an OAuth client](https://help.mypurecloud.com/
 
     iii. In the `scripts` property add `node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js`
 
+    iv. Change the key of the `browser` entry to `main`.
+
     The modified `build` property should look like this:
 
      ```json
@@ -231,6 +234,7 @@ For more information, see [Create an OAuth client](https://help.mypurecloud.com/
         "builder": "@angular-builders/custom-webpack:browser",
         "options": {
           ...,
+          "main": "src/main.ts",
           "customWebpackConfig": {
             "path": "./extra-webpack.config.js",
             "mergeRules": { "externals": "prepend" }
