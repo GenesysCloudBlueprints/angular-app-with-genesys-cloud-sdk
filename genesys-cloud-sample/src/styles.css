@@ -23,7 +23,7 @@ input[type=text] {
   margin: 8px 0;
   transition: 0.3s;
 
-  background-image: url('~src/assets/search-icon.png');
+  background-image: url('assets/search-icon.png');
   background-color: white;
   background-position: 8px 8px;
   background-repeat: no-repeat;

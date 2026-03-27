@@ -11,11 +11,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/genesys-cloud-sample",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -27,14 +27,20 @@
             "styles": [
               "src/styles.css"
             ],
-            "customWebpackConfig": {
-              "path": "./extra-webpack.config.js",
-              "mergeRules": { "externals": "prepend" }
-            },
-            "scripts": ["node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
+            "scripts": [
+              "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js",
+              "src/require-platform-client.js"
+            ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "baseHref": "/angular-app-with-genesys-cloud-sdk/",
               "budgets": [
                 {
                   "type": "initial",
@@ -58,7 +64,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "genesys-cloud-sample:build:production"
@@ -69,35 +75,19 @@
           },
           "defaultConfiguration": "development"
         },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "genesys-cloud-sample:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-builders/custom-webpack:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "customWebpackConfig": {
-              "path": "./extra-webpack.config.js",
-              "mergeRules": { "externals": "prepend" }
-            },
-            "scripts": ["node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

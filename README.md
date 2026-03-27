@@ -1,6 +1,6 @@
 # Develop an Angular App that uses the Genesys Cloud Platform SDK
 
-View the full [Develop an Angular app that uses the Genesys Cloud Platform SDK](https://developer.mypurecloud.com/blueprints/) article on the Genesys Cloud Developer Center.
+View the full [Develop an Angular app that uses the Genesys Cloud Platform SDK](https://developer.genesys.cloud/blueprints/angular-app-with-genesys-cloud-sdk/)article on the Genesys Cloud Developer Center.
 
 ![GCSDK_Angular](blueprint/images/gcsdk_angular.png "Develop an Angular app that uses the Genesys Cloud Platform SDK")
 

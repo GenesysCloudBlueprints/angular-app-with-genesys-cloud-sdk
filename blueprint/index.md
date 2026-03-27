@@ -6,318 +6,315 @@ icon: blueprint
 image: images/cover.png
 category: 6
 summary: |
-  This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesys Cloud Javascript Platform SDK in an Angular project. The blueprint includes a sample Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of agents. The blueprint also shows how to configure the SDK for a new or existing Angular project.
+  This Genesys Cloud Developer Blueprint shows how to integrate the Genesys Cloud JavaScript Platform SDK into a modern Angular application. The blueprint includes a sample Angular app that uses PKCE authentication and the Genesys Cloud APIs for user search, presence updates, and queue-based supervisor workflows. It also explains how to configure the SDK in a new or existing Angular project.
 ---
-:::{"alert":"primary","title":"About Genesys Cloud Blueprints","autoCollapse":false} 
-Genesys Cloud blueprints were built to help you jump-start building an application or integrating with a third-party partner. 
-Blueprints are meant to outline how to build and deploy your solutions, not a production-ready turn-key solution.
- 
-For more details on Genesys Cloud blueprint support and practices 
-please see our Genesys Cloud blueprint [FAQ](https://developer.genesys.cloud/blueprints/faq)sheet.
-:::
+::{"alert":"primary","title":"About Genesys Cloud Blueprints","autoCollapse":false}
+Genesys Cloud blueprints help you jump-start building an application or integrating with a third-party partner.
+Blueprints outline how to build and deploy a solution, but they are not production-ready turnkey implementations.
 
-This Genesys Cloud Developer Blueprint demonstrates how to to include the Genesys Cloud Javascript Platform SDK in an Angular project. The blueprint includes a sample Angular project that uses the Genesys Cloud API for supervisor functionalities like searching and setting the status of users. The blueprint also shows how to configure the SDK for a new or existing Angular project.
+For more details on blueprint support and practices, see the Genesys Cloud blueprint [FAQ](https://developer.genesys.cloud/blueprints/faq).
+::::
+
+This blueprint demonstrates how to integrate the Genesys Cloud JavaScript Platform SDK into an Angular application and how to structure that integration in a way that works with current Angular builds. The included sample app uses PKCE authentication and calls the Genesys Cloud APIs for user search, presence updates, and queue-based supervisor actions.
 
 ![Flowchart](images/gcsdk_angular.png "Develop an Angular app that uses the Genesys Cloud Platform SDK")
 
 :::primary
-**Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, click [here](#configuring-the-angular-project-to-use-genesys-cloud-sdk) to jump to the section.
+**Note**: If you already have an Angular project and only need the SDK setup details, jump to [Configure an Angular project to use the Genesys Cloud SDK](#configure-an-angular-project-to-use-the-genesys-cloud-sdk).
 :::
 
 ## Contents
 
-* [Solution components](#solution-components "Goes to the Solutions Components section")
+* [Solution components](#solution-components "Goes to the Solution components section")
 * [Prerequisites](#prerequisites "Goes to the Prerequisites section")
 * [Sample Angular app](#sample-angular-app "Goes to the Sample Angular app section")
-* [Implementation steps](#implementation-steps "Goes to the Implementation steps section")
+* [Configure an Angular project to use the Genesys Cloud SDK](#configure-an-angular-project-to-use-the-genesys-cloud-sdk "Goes to the SDK configuration section")
 * [Additional resources](#additional-resources "Goes to the Additional resources section")
 
 ## Solution components
 
-* **Genesys Cloud** - A suite of Genesys cloud services for enterprise-grade communications, collaboration, and contact center management. In this solution, a Genesys Cloud user account is required in order for the Angular app to be authorized to integrate with Genesys Cloud.
-* **Angular CLI** - A command line tool that facilitates the use of the Angular development framework for building single-page applications. The sample app in this solution was built with Angular 17 CLI.
+* **Genesys Cloud** - A suite of cloud services for enterprise communications, collaboration, and contact center management. In this solution, a Genesys Cloud user account authorizes the Angular app and provides the API data used by the sample experience.
+* **Angular CLI and Angular build tooling** - Angular CLI provides the development and build workflow for the application. The sample app in this repository currently uses Angular 21 and the Angular application builder.
 
 ### Software development kit (SDK)
 
-* **Genesys Cloud Platfrom API SDK** -  Client libraries used to simplify application integration with Genesys Cloud by handling low-level HTTP requests. In this solution, the SDK authorizes the user and performs the API calls required to execute the supervisor features.
+* **Genesys Cloud Platform API SDK** - Client libraries that simplify integration with Genesys Cloud by handling authentication and low-level HTTP requests. In this solution, the SDK authorizes the user and performs the API calls required for the sample's user, presence, and queue workflows.
 
 ## Prerequisites
 
 ### Specialized knowledge
 
 * Administrator-level knowledge of Genesys Cloud
-* Experience using the Genesys Cloud Platform API
-* Experience using Angular or the Angular CLI 
+* Familiarity with the Genesys Cloud Platform API
+* Experience with Angular, TypeScript, and npm-based application development
+* Basic understanding of OAuth redirect URIs and browser-based authentication flows
 
 ### Genesys Cloud account requirements
 
 * A Genesys Cloud license. For more information on licensing, see [Genesys Cloud Pricing](https://www.genesys.com/pricing "Goes to the pricing page").
-* (Recommended) The Master Admin role in Genesys Cloud. For more information, see [Roles and permissions overview](https://help.mypurecloud.com/?p=24360 "Opens the Roles and permissions overview article") in the Genesys Cloud Resource Center.
+* Permission to create or update an OAuth client in Genesys Cloud. For local development, include `http://localhost:4200` as an authorized redirect URI.
+* The scopes required by your app. The sample app uses `analytics`, `authorization`, `presence`, `routing`, and `users`.
 
-## Sample Angular app  
+### Local development requirements
+
+* A supported Node.js and npm installation
+* An Angular workspace, either new or existing
+
+## Sample Angular app
 
 :::primary
-**Note**: If you have an existing Angular project and only want to know how to configure Genesys Cloud SDK in your app, see [Implementation steps](#implementation-steps "Goes to the Implementation steps section").
+**Note**: If you have an existing Angular project and only want to know how to configure the Genesys Cloud SDK in your app, see [Configure an Angular project to use the Genesys Cloud SDK](#configure-an-angular-project-to-use-the-genesys-cloud-sdk "Goes to the SDK configuration section").
 :::
 
-This solution includes a sample Angular app that uses the Genesys Cloud Javascript Platform SDK to display and update data for Genesys Cloud users.
+This solution includes a sample Angular app that authenticates with PKCE and uses the Genesys Cloud JavaScript Platform SDK to display and update data for Genesys Cloud users.
 
 ![Sample App screenshot](images/sampleapp.png "The main page of the sample app")
 
- From the sample Angular app, you can update some user data, and that updated data is returned to Genesys Cloud in real-time. Specifically:
+From the sample Angular app, you can authenticate against Genesys Cloud and work with live platform data in real time. Specifically:
 
-* The **User** page displays data from your Genesys Cloud user account. It also contains a presence-picker component, which allows you to change your presence or routing status.
-* The **User Search** page allows you to search for other users in your Genesys Cloud org.  
-* The **Queues List** page allows you to see Observation Query details for each queue. Within the Angular app, you can log out all of the agents on a particular queue, which is helpful if those agents cannot log out of their stations after their shift is over.
+* The **Home** page displays the authenticated user's details and lets the user update presence.
+* The **User Search** page lets you search for users in your Genesys Cloud organization and open each user's details.
+* The **Queues List** page displays queue observation data and provides a bulk logout action for agents in a queue.
 
 ### Genesys Cloud service
 
-The sample Angular app includes the `genesys-cloud` service, which contains the Genesys Cloud-related functionality that is supported by the Angular app.
+The sample Angular app includes a `genesys-cloud` service that wraps the Genesys Cloud SDK. The service initializes the API client, performs PKCE login, and converts SDK promises into RxJS observables so the Angular components can consume them naturally.
 
-All of the API methods return a promise, but if you want to work with observables instead, you can easily convert the promises by using the `from` operator. For example:
+For example:
 
 ```typescript
-  getUserDetails(id: string): Observable<platformClient.Models.User> {
-    return from(this.usersApi.getUser(id, {
-        expand: ['routingStatus', 'presence'],
-      }));
+import { Injectable } from '@angular/core';
+import { from, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+import { AuthData, Models } from 'purecloud-platform-client-v2';
+
+declare var platformClient: typeof import('purecloud-platform-client-v2');
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GenesysCloudService {
+  private client = platformClient.ApiClient.instance;
+  private usersApi = new platformClient.UsersApi();
+
+  initialize(): Observable<AuthData> {
+    this.client.setPersistSettings(true);
+    this.client.setEnvironment('mypurecloud.com');
+
+    return from(
+      this.client.loginPKCEGrant(
+        environment.GENESYS_CLOUD_CLIENT_ID,
+        environment.REDIRECT_URI
+      )
+    );
   }
+
+  getUserDetails(id: string): Observable<Models.User> {
+    return from(this.usersApi.getUser(id, {
+      expand: ['routingStatus', 'presence'],
+    }));
+  }
+}
 ```
 
-### Run the sample Angular app hosted in Github
+### Run the sample Angular app hosted in GitHub Pages
 
-You can run the sample Angular app locally or from the blueprint repo.
+You can run the sample Angular app locally or from the blueprint repository.
 
 :::primary
-**Note**: Regardless of where you run the sample Angular app from, you need a Genesys Cloud user account in order for it to work.
+**Note**: Regardless of where you run the sample Angular app, you need a Genesys Cloud user account for it to work.
 :::
 
-To run the sample Angular app from the blueprint repo:
+To run the sample Angular app from the blueprint repository:
 
-1.  Click [here](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/ "Goes to the sample Angular app").
+1. Open the hosted [sample Angular app](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/ "Goes to the sample Angular app").
+2. If you are on a different region than `us-east-1` (`mypurecloud.com`), add an `environment` query parameter to the URL and enter your Genesys Cloud environment.
 
-2.  If you're on a different region than `us-east-1` (mypurecloud.com), add an `environment` query parameter to the URL and enter your Genesys Cloud environment.
+For example:
 
-  For example:
+```bash
+https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
+```
 
-  ```bash
-  https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/?environment=mypurecloud.com.au
-  ```
-
-  For more information, see [Platform API](/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
-
+For more information, see [Platform API](/api/rest/ "Goes to the Platform API page in the Genesys Cloud Developer Center").
 
 ### Run the sample Angular app locally
 
-1. Clone the [blueprint repo](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the blueprint repo in Github") to your local machine:
+1. Clone the [blueprint repository](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the blueprint repository in GitHub") to your local machine.
 
-  ```bash
-  git clone https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk.git
-  ```
+   ```bash
+   git clone https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk.git
+   ```
 
-2. Go to the **genesys-cloud-sample** project directory.
+2. Change to the `genesys-cloud-sample` project directory.
 
-  ```bash
-  cd genesys-cloud-sample
-  ```
+   ```bash
+   cd genesys-cloud-sample
+   ```
 
-3. Modify the client ID and redirect URI values in the environment files.
+3. Install the project dependencies.
 
-  i. Go to the **src**>**environments** directory.
+   ```bash
+   npm install
+   ```
 
-  ii. Modify the production `environment.prod.ts` file:
+4. Update the client ID and redirect URI values in the environment files under `src/environments`.
 
-  ```typescript
-  export const environment = {
-    production: true,
-    GENESYS_CLOUD_CLIENT_ID: '<YOUR CLIENT ID HERE>',
-    REDIRECT_URI: '<YOUR PRODUCTION URI HERE>',
-  };
-  ```
+   Modify `environment.prod.ts`:
 
-  iii. Modify the test `environment.ts:` file:
+   ```typescript
+   export const environment = {
+     production: true,
+     GENESYS_CLOUD_CLIENT_ID: '<YOUR CLIENT ID HERE>',
+     REDIRECT_URI: 'https://your-production-url.example.com'
+   };
+   ```
 
-  ```typescript
-  export const environment = {
-    production: false,
-    GENESYS_CLOUD_CLIENT_ID: '<YOUR CLIENT ID HERE>',
-    REDIRECT_URI: 'http://localhost:4200',
-  };
-  ```
+   Modify `environment.ts`:
 
-4. Serve the Angular app locally:
+   ```typescript
+   export const environment = {
+     production: false,
+     GENESYS_CLOUD_CLIENT_ID: '<YOUR CLIENT ID HERE>',
+     REDIRECT_URI: 'http://localhost:4200'
+   };
+   ```
 
-  ```bash
-  ng serve
-  ```
+5. Start the Angular development server.
 
-## Implementation steps
+   ```bash
+   npm start
+   ```
 
-Follow these instructions to include the Genesys Cloud Javascript Platform SDK in your own Angular project.
+## Configure an Angular project to use the Genesys Cloud SDK
 
-:::primary
-**Tip**: Instead of creating a new Angular project, you can use an existing one. However, these instructions assume you're using Angular 12. If you use an earlier version of Angular, you may need to adapt these instructions.
-:::
+Follow these instructions to include the Genesys Cloud JavaScript Platform SDK in your own Angular project using a modern Angular workspace. This approach relies on Angular's built-in build configuration and does not require a custom webpack builder.
 
-### Create a Token Implicit Grant (Browser) client in Genesys Cloud
+### Create a PKCE-enabled OAuth client in Genesys Cloud
 
-1. To authorize your app with the Genesys Cloud SDK, create an Implicit Grant (Browser) client with the following settings:
+1. Create or update an OAuth client for browser-based Authorization Code with PKCE.
+2. Add your authorized redirect URIs:
+   * Your production URL
+   * `http://localhost:4200` for local development
+3. Add the scopes your app needs. The sample app uses:
+   * `analytics`
+   * `authorization`
+   * `presence`
+   * `routing`
+   * `users`
 
-  * **Authorized redirect URIs (one per line)**:
-    * Your production URI
-    * `http://localhost:4200/` (to test locally)
-  * **Scope**:
-    * analytics
-    * authorization
-    * presence
-    * routing
-    * users
+For more information, see [Create an OAuth client](https://help.genesys.cloud/articles/create-an-oauth-client/ "Goes to the Create an OAuth client article") and [Authorization Code with PKCE](https://developer.genesys.cloud/api/rest/authorization/use-authorization-code "Goes to the Authorization Code with PKCE documentation").
 
-For more information, see [Create an OAuth client](https://help.mypurecloud.com/articles/create-an-oauth-client/ "Goes to the Create an OAuth client article") in the Genesys Cloud Resource Center.
+### Create or open your Angular project
 
-### Prepare Angular
+1. If you need a new project, create one with the current Angular CLI:
 
-1. Install the Angular CLI:
+   ```bash
+   npx @angular/cli@latest new name-of-your-app
+   ```
 
-  ```bash
-  npm install -g @angular/cli
-  ```
+2. Change to the project directory:
 
-2. Create a new Angular 12 project:
+   ```bash
+   cd name-of-your-app
+   ```
 
-  ```bash
-  ng new name-of-your-app
-  ```
+### Install the Genesys Cloud SDK
 
-### Install NPM packages
+Install the Genesys Cloud platform client package:
 
-1. Install the Genesys Cloud platform client:
+```bash
+npm install purecloud-platform-client-v2
+```
 
-  ```bash
-  npm install purecloud-platform-client-v2
-  ```
+### Register the SDK scripts in `angular.json`
 
-2. Install the custom-webpack library:
+In your workspace `angular.json` file, add the Genesys Cloud SDK bundle and a small bridge file to the `build.options.scripts` array. In a current Angular workspace, the relevant section looks similar to the following:
 
-  ```bash
-  npm i @angular-builders/custom-webpack --save-dev
-  ```
-
-### Configure the files for use with the Genesys Cloud Javascript Platform SDK
-
-1. In the root of your Angular project, create a file with a meaningful name. For example, `extra-webpack.config.js`
-
-2. Add the following content to the file:
-
-  ```javascript
-  module.exports = {
-    externals: {
-      'purecloud-platform-client-v2': "require('platformClient')",
-    },
+```json
+"build": {
+  "builder": "@angular/build:application",
+  "options": {
+    "browser": "src/main.ts",
+    "scripts": [
+      "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js",
+      "src/require-platform-client.js"
+    ]
   }
-  ```
+}
+```
 
-3. In the root of the project, open the `angular.json` file and find the `architect` property. Then modify the builder targets, which are found under the `build` property:
+This keeps the SDK loading compatible with the Angular application builder without introducing a custom webpack configuration.
 
-    i. Change the builder property to: `@angular-builders/custom-webpack:browser`
+### Add the `require-platform-client.js` bridge
 
-    ii. Under the options property, add a new `customWebpackConfig` object. Refer to the following code block for details.
+Create `src/require-platform-client.js` with the following content:
 
-    iii. In the `scripts` property add `node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js`
+```javascript
+const platformClient = require('platformClient');
+```
 
-    iv. Change the key of the `browser` entry to `main`.
+This lightweight bridge ensures the SDK's global client is available at runtime while keeping the Angular configuration simple.
 
-    The modified `build` property should look like this:
+### Configure environment values
 
-     ```json
-      "build": {
-        "builder": "@angular-builders/custom-webpack:browser",
-        "options": {
-          ...,
-          "main": "src/main.ts",
-          "customWebpackConfig": {
-            "path": "./extra-webpack.config.js",
-            "mergeRules": { "externals": "prepend" }
-          },
-          "scripts": [..., "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
-        }
-      }
+Store your Genesys Cloud OAuth settings in the Angular environment files. For example:
 
-    ```
+```typescript
+export const environment = {
+  production: false,
+  GENESYS_CLOUD_CLIENT_ID: '<YOUR CLIENT ID HERE>',
+  REDIRECT_URI: 'http://localhost:4200'
+};
+```
 
-4. Modify the `serve` property:
+Use the production environment file to set your deployed redirect URI.
 
-  ```json
-  "serve": {
-    "builder": "@angular-builders/custom-webpack:dev-server",
-    ...
+### Authorize and call the SDK from an Angular service
+
+Create an Angular service that initializes the SDK client, sets the Genesys Cloud environment, and starts the PKCE flow.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { from, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+import { AuthData, Models } from 'purecloud-platform-client-v2';
+
+declare var platformClient: typeof import('purecloud-platform-client-v2');
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GenesysCloudService {
+  private client = platformClient.ApiClient.instance;
+  private usersApi = new platformClient.UsersApi();
+
+  initialize(): Observable<AuthData> {
+    this.client.setPersistSettings(true);
+    this.client.setEnvironment('mypurecloud.com');
+
+    return from(
+      this.client.loginPKCEGrant(
+        environment.GENESYS_CLOUD_CLIENT_ID,
+        environment.REDIRECT_URI
+      )
+    );
   }
-  ```
-  :::primary
-  **Tip**: The `serve` property uses the `options` configuration from the `build` property, so you don't need to change anything else here.
-  :::
 
-5. Modify the `test` property:
-
-  i.  If you're using Karma for Angular testing, change the builder property to: `@angular-builders/custom-webpack:karma`.
-
-  ii. Under the `options` property, add a new `customWebpackConfig` object. Refer to the following code block for details.
-
-  iii. In the `scripts` property add `node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js`
-
-  The modified `build` property should look something like this:
-
-   ```json
-    "build": {
-      "builder": "@angular-builders/custom-webpack:karma",
-      "options": {
-        ...,
-        "customWebpackConfig": {
-          "path": "./extra-webpack.config.js",
-          "mergeRules": { "externals": "prepend" }
-        },
-        "scripts": [..., "node_modules/purecloud-platform-client-v2/dist/web-cjs/purecloud-platform-client-v2.min.js"]
-      }
-    }
-
-  ```
-
-6. Finally, in your `tsconfig.json`, disable `noImplicitAny` in the `compilerOptions`:
-
-  ```json
-  {
-    ...
-    "compilerOptions": {
-      ...
-      "noImplicitAny": false,
-    },
+  getUserDetails(id: string): Observable<Models.User> {
+    return from(this.usersApi.getUser(id, {
+      expand: ['routingStatus', 'presence'],
+    }));
   }
-  ```
+}
+```
 
-### Import the Genesys Cloud Javascript Platform SDK into your Angular project
-
-1. Import and use the Genesys Cloud platform client in your Angular code. For example:
-
-  ```javascript
-  import { Component, OnInit } from '@angular/core';
-  import * as platformClient from 'purecloud-platform-client-v2';
-
-  @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
-  })
-  export class AppComponent implements OnInit {
-    title = 'sample-app';
-    ngOnInit() {
-      console.log(platformClient);
-    }
-  }
-  ```
+Once the client is initialized, you can create API instances such as `UsersApi`, `PresenceApi`, or `RoutingApi` and call the methods your Angular components need.
 
 ## Additional resources
 
-* [Genesys Cloud Platform SDK - Javascript](/api/rest/client-libraries/javascript/ "Goes to the Platform API Javascript Client page")
-* [Angular Builders - Custom Webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack "Goes to the Custom webpack builders for Angular build facade page") in the npm website
-* [angular-app-with-genesys-cloud-sdk repository](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the angular-app-with-genesys-cloud-sdk repository") in Github
-* [Sample Angular app](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk "Goes to the sample Angular app")
+* [Genesys Cloud Platform SDK - JavaScript](/api/rest/client-libraries/javascript/ "Goes to the Platform API JavaScript client page")
+* [Authorization Code with PKCE](https://developer.genesys.cloud/api/rest/authorization/use-authorization-code "Goes to the Authorization Code with PKCE documentation")
+* [Create an OAuth client](https://help.genesys.cloud/articles/create-an-oauth-client/ "Goes to the Create an OAuth client article")
+* [angular-app-with-genesys-cloud-sdk repository](https://github.com/GenesysCloudBlueprints/angular-app-with-genesys-cloud-sdk "Goes to the angular-app-with-genesys-cloud-sdk repository") in GitHub
+* [Sample Angular app](https://genesyscloudblueprints.github.io/angular-app-with-genesys-cloud-sdk/ "Goes to the sample Angular app")

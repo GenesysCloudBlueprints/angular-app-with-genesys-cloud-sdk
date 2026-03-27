@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { GenesysCloudService } from '../genesys-cloud.service';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
+import { PresencePickerComponent } from '../presence-picker/presence-picker.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    imports: [PresencePickerComponent]
 })
 export class HomeComponent implements OnInit {
-  userDetails?: platformClient.Models.UserMe;
+  userDetails?: Models.UserMe;
   userAvatar: string = 'assets/default-face.png';
 
   constructor(private genesysCloudService: GenesysCloudService) {

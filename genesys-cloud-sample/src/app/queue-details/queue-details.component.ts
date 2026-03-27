@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GenesysCloudService } from '../genesys-cloud.service';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
 
 @Component({
-  selector: 'app-queue-details',
-  templateUrl: './queue-details.component.html',
-  styleUrls: ['./queue-details.component.css']
+    selector: 'app-queue-details',
+    templateUrl: './queue-details.component.html',
+    styleUrls: ['./queue-details.component.css']
 })
 export class QueueDetailsComponent implements OnInit {
-  @Input() queue?: platformClient.Models.UserQueue|platformClient.Models.Queue;
+  @Input() queue?: Models.UserQueue | Models.Queue;
   onQueueAgents = 0;
   totalAgents = 0;
   fetching = true;

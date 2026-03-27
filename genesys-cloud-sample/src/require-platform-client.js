@@ -1,0 +1,1 @@
+const platformClient = require('platformClient');

@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GenesysCloudService } from '../genesys-cloud.service';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
 import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { QueueDetailsComponent } from '../queue-details/queue-details.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-queue-list-page',
-  templateUrl: './queue-list-page.component.html',
-  styleUrls: ['./queue-list-page.component.css']
+    selector: 'app-queue-list-page',
+    templateUrl: './queue-list-page.component.html',
+    styleUrls: ['./queue-list-page.component.css'],
+    imports: [QueueDetailsComponent, AsyncPipe]
 })
 export class QueueListPageComponent implements OnInit {
   searchTerm = new BehaviorSubject<string>('');
-  queues$!: Observable<platformClient.Models.Queue[]>
+  queues$!: Observable<Models.Queue[]>
   fetching = false;
 
   constructor(

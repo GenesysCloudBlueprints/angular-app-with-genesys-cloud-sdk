@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of, BehaviorSubject, forkJoin, EMPTY } from 'rxjs';
 import { mergeMap, map, tap } from 'rxjs/operators';
-import { environment } from '../../src/environments/environment';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { environment } from '../environments/environment';
+import { Models, AuthData } from 'purecloud-platform-client-v2';
+
+declare var platformClient: typeof import('purecloud-platform-client-v2');
 
 // Keys for localStorage
 const LANGUAGE_KEY = 'gc_language';
@@ -26,7 +28,7 @@ export class GenesysCloudService {
   isAuthorized = new BehaviorSubject<boolean>(false);
 
   // Cache for presence definitions
-  presenceDefinitions = new BehaviorSubject<platformClient.Models.OrganizationPresence[]>([]);
+  presenceDefinitions = new BehaviorSubject<Models.OrganizationPresence[]>([]);
   offlinePresenceId = '';
 
   // Persist search values
@@ -39,8 +41,8 @@ export class GenesysCloudService {
     this.environment = localStorage.getItem(ENV_KEY) || this.environment;
   }
 
-  private loginImplicitGrant(): Observable<platformClient.AuthData> {
-    return from(this.client.loginImplicitGrant(environment.GENESYS_CLOUD_CLIENT_ID, environment.REDIRECT_URI))
+  private loginPKCEGrant(): Observable<AuthData> {
+    return from(this.client.loginPKCEGrant(environment.GENESYS_CLOUD_CLIENT_ID, environment.REDIRECT_URI))
             .pipe(
               map(data => {
                 this.accessToken = data.accessToken;
@@ -56,7 +58,7 @@ export class GenesysCloudService {
     this.client.setPersistSettings(true);
     this.client.setEnvironment(this.environment);
 
-    return this.loginImplicitGrant().pipe(
+    return this.loginPKCEGrant().pipe(
               mergeMap(data => from(this.presenceApi.getPresencedefinitions())),
               tap(data => {
                 if(!data.entities) return;
@@ -87,24 +89,24 @@ export class GenesysCloudService {
     }
   }
 
-  getUserDetails(id: string): Observable<platformClient.Models.User> {
+  getUserDetails(id: string): Observable<Models.User> {
     return from(this.usersApi.getUser(id, { 
         expand: ['routingStatus', 'presence'],
       }));
   }
 
-  getUserMe(): Observable<platformClient.Models.UserMe> {
+  getUserMe(): Observable<Models.UserMe> {
     return from(this.usersApi.getUsersMe({ 
         expand: ['routingStatus', 'presence'],
       }));
   }
 
-  getUserQueues(userId: string): Observable<platformClient.Models.UserQueue[]> {
+  getUserQueues(userId: string): Observable<Models.UserQueue[]> {
     return from(this.routingApi.getUserQueues(userId, { joined: true }))
             .pipe(map(data => data.entities || []));
   }
 
-  getQueueObservations(queueId: string): Observable<platformClient.Models.QueueObservationDataContainer>{
+  getQueueObservations(queueId: string): Observable<Models.QueueObservationDataContainer>{
     return from(this.analyticsApi.postAnalyticsQueuesObservationsQuery({
       filter: {
         type: 'or',
@@ -129,7 +131,7 @@ export class GenesysCloudService {
     );
   }
 
-  setUserPresence(userId: string, presenceId: string): Observable<platformClient.Models.UserPresence> {
+  setUserPresence(userId: string, presenceId: string): Observable<Models.UserPresence> {
     return from(this.presenceApi.patchUserPresencesPurecloud(
         userId, 
         { presenceDefinition: { id: presenceId } }
@@ -166,7 +168,7 @@ export class GenesysCloudService {
       )
   }
 
-  searchUsers(term: string): Observable<platformClient.Models.User[]> {
+  searchUsers(term: string): Observable<Models.User[]> {
     if(!term.trim()){
       return of([]);
     }
@@ -188,7 +190,7 @@ export class GenesysCloudService {
       .pipe(map(data => data.results || []));
   }
 
-  searchQueues(term: string): Observable<platformClient.Models.Queue[]> {
+  searchQueues(term: string): Observable<Models.Queue[]> {
     return from(this.routingApi.getRoutingQueues({
         pageSize: 10, name: `*${term}*`,
       }))

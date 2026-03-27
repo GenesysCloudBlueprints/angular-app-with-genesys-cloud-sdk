@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
 import { GenesysCloudService } from '../genesys-cloud.service';
 
 @Component({
-  selector: 'app-presence-picker',
-  templateUrl: './presence-picker.component.html',
-  styleUrls: ['./presence-picker.component.css']
+    selector: 'app-presence-picker',
+    templateUrl: './presence-picker.component.html',
+    styleUrls: ['./presence-picker.component.css']
 })
 export class PresencePickerComponent implements OnInit {
-  @Input() user!: platformClient.Models.User;
+  @Input() user!: Models.User;
   languageLabel = 'en_US';
-  presenceDefinitions: platformClient.Models.OrganizationPresence[] = [];
+  presenceDefinitions: Models.OrganizationPresence[] = [];
 
   constructor(
     private genesysCloudService: GenesysCloudService,

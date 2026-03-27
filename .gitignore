@@ -47,6 +47,10 @@ typings/
 # TypeScript cache
 *.tsbuildinfo
 
+# Environment variables
+.env
+.env.test
+
 # Optional npm cache directory
 .npm
 
@@ -141,6 +145,9 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+
+# Bun
+bun.lock
 
 # System files
 .DS_Store

@@ -1,14 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
+import { PresencePickerComponent } from '../presence-picker/presence-picker.component';
 
 @Component({
-  selector: 'app-user-list-entry',
-  templateUrl: './user-list-entry.component.html',
-  styleUrls: ['./user-list-entry.component.css']
+    selector: 'app-user-list-entry',
+    templateUrl: './user-list-entry.component.html',
+    styleUrls: ['./user-list-entry.component.css'],
+    imports: [PresencePickerComponent]
 })
 export class UserListEntryComponent implements OnInit {
-  @Input() user!: platformClient.Models.User;
+  @Input() user!: Models.User;
   userAvatar: string = 'assets/default-face.png';
 
   constructor(

@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, merge, BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, mapTo, switchMap, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { GenesysCloudService } from '../genesys-cloud.service';
 
-import * as platformClient from 'purecloud-platform-client-v2';
+import { Models } from 'purecloud-platform-client-v2';
+import { UserListEntryComponent } from '../user-list-entry/user-list-entry.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-agent-manager',
-  templateUrl: './agent-manager.component.html',
-  styleUrls: ['./agent-manager.component.css']
+    selector: 'app-agent-manager',
+    templateUrl: './agent-manager.component.html',
+    styleUrls: ['./agent-manager.component.css'],
+    imports: [UserListEntryComponent, AsyncPipe]
 })
 export class AgentManagerComponent implements OnInit {
   searchTerm = new BehaviorSubject<string>('');
-  users$!: Observable<platformClient.Models.User[]>
+  users$!: Observable<Models.User[]>
   fetching = false;
 
   constructor(
